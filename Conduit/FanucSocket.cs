@@ -66,7 +66,7 @@ namespace JurmanMetrics
         public FanucSocket()
         {
             BufferSize = 960;       // 960 bytes
-            SendDelay = 500;        // 500mS
+            SendDelay = 1000;        // 1S
 
             nsLock = new SemaphoreSlim(1, 1);
 
