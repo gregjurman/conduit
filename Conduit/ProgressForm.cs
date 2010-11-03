@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.IO;
 using JurmanMetrics;
 
-
+[assembly: CLSCompliant(true)]
 namespace Conduit
 {
     public partial class ProgressForm : Form
@@ -17,12 +17,15 @@ namespace Conduit
         string fileName;
         StreamWriter recvDataStream;
         FanucSocket fSocket;
+        SaveFileDialog sfd;
+        OpenFileDialog ofd;
 
         public ProgressForm()
         {
             InitializeComponent();
 
             fSocket = new FanucSocket(100, 200);
+
             fSocket.StateChanged += new FanucSocket.StateChangeEventHander(fSocket_StateChanged);
             fSocket.SendOperationCompleted += new EventHandler(fSocket_SendOperationCompleted);
             fSocket.ReceiveOperationCompleted += new EventHandler(fSocket_ReceiveOperationCompleted);
@@ -84,6 +87,8 @@ namespace Conduit
 
                 recvDataStream.Flush();
                 recvDataStream.Close();
+
+                fSocket.Close();
 
                 MessageBox.Show("Receive complete!");
             }
@@ -154,22 +159,20 @@ namespace Conduit
 
                     if (!fi.Exists)
                         throw new FileNotFoundException("File not found", fileName);
+                    
+                    this.Text = "Conduit - " + fi.Name;
                 }
-                catch (Exception excp)
+                catch
                 {
-                    MessageBox.Show(
-                        text: excp.Message,
-                        caption: "Conduit - Unable to Open File",
-                        buttons: MessageBoxButtons.OK,
-                        icon: MessageBoxIcon.Error,
-                        defaultButton: MessageBoxDefaultButton.Button1
-                    );
+                    throw;
                 }
             }
 
-            if (host == "")
+            if (String.IsNullOrEmpty(host))
             {
-
+                textController.Text = "";
+                buttonReceive.Enabled = false;
+                buttonSend.Enabled = false;
             }
         }
 
@@ -181,9 +184,9 @@ namespace Conduit
         /// <param name="e"></param>
         private void buttonSend_Click(object sender, EventArgs e)
         {
-            if ((fileName=="") || !(new FileInfo(fileName).Exists))
+            if ((String.IsNullOrEmpty(fileName)) || !(new FileInfo(fileName).Exists))
             {
-                OpenFileDialog ofd = new OpenFileDialog();
+                if (ofd == null) ofd = new OpenFileDialog();
                 ofd.CheckFileExists = true;
                 ofd.Multiselect = false;
                 ofd.DefaultExt = "txt";
@@ -208,9 +211,9 @@ namespace Conduit
             {
                 SendData();
             }
-            catch (Exception exp)
+            catch
             {
-                
+                throw;
             }
             finally
             {
@@ -221,23 +224,32 @@ namespace Conduit
         /// <summary>
         /// Sends the file defined in fileName to the NC
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         void SendData()
         {
+            StreamReader sr = new StreamReader(fileName);
+            string dataIn = sr.ReadToEnd();
+
             try
             {
                 progressBar.Show();
                 labelStatus.Show();
-                StreamReader sr = new StreamReader(fileName);
-                string dataIn = sr.ReadToEnd();
 
-                sr.Close();
-
-                fSocket.Connect(textController.Text, 10001); //This is hard set, fix it
+                fSocket.Connect(textController.Text, 10001); //This is hard set, fix it (CONDUIT-7)
                 fSocket.WriteOut(dataIn, FanucSocketOptions.FixNewline);
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                sr.Dispose();
+                sr = null;
+
+                throw;
+            }
+
+            if (sr != null)
+            {
+                sr.Dispose();
+                sr = null;
             }
         }
 
@@ -253,21 +265,33 @@ namespace Conduit
                 fSocket.Connect(textController.Text, 10001); //This is hard set, fix it
                 fSocket.ReadIn(FanucSocketOptions.FixNewline);
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
         private void buttonReceive_Click(object sender, EventArgs e)
         {
-            if ((fileName == "") || !(new FileInfo(fileName).Exists))
+            if ((String.IsNullOrEmpty(fileName)) || !(new FileInfo(fileName).Exists))
             {
-                SaveFileDialog sfd = new SaveFileDialog();
+                if (sfd == null) sfd = new SaveFileDialog();
                 sfd.CheckFileExists = false;
                 sfd.DefaultExt = "txt";
                 sfd.FileOk += new CancelEventHandler(sfd_FileOk);
                 sfd.ShowDialog();
+            }
+            else
+            {
+                try
+                {
+                    recvDataStream = new StreamWriter(fileName, false, Encoding.ASCII, 1024);
+                    ReceiveData();
+                }
+                catch
+                {
+                    throw;
+                }
             }
         }
 
@@ -283,13 +307,23 @@ namespace Conduit
                 recvDataStream = new StreamWriter(fileName, false, Encoding.ASCII, 1024);
                 ReceiveData();
             }
-            catch (Exception exp)
+            catch
             {
-
+                throw;
             }
-            finally
+        }
+
+        private void textController_TextChanged(object sender, EventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(textController.Text))
             {
-                fSocket.Close();
+                buttonReceive.Enabled = false;
+                buttonSend.Enabled = false;
+            }
+            else
+            {
+                buttonReceive.Enabled = true;
+                buttonSend.Enabled = true;
             }
         }
     }

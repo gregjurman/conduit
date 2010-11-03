@@ -13,6 +13,10 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
+            if (recvDataStream != null) recvDataStream.Dispose();
+            fSocket.Close();
+            fSocket.Dispose();
+
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -55,6 +59,7 @@
             this.textController.Size = new System.Drawing.Size(334, 20);
             this.textController.TabIndex = 4;
             this.textController.Text = "m1devsrv.devsrv.jurmanmetrics.local";
+            this.textController.TextChanged += new System.EventHandler(this.textController_TextChanged);
             // 
             // buttonSend
             // 

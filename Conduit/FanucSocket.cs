@@ -11,9 +11,10 @@ namespace JurmanMetrics
 {
     public enum FanucSocketState { Idle = 0, Waiting, Sending, Receiving, NotConnected = 1000, Unknown = 9999 };
     public enum FanucChunkState { UnProcessed = 0, ReadyForProcessing, Processed, Ignore, Error = 1000 };
+    [Flags]
     public enum FanucSocketOptions { None = 0, FixNewline = 1, IgnoreControlCodes = 2, RawMode = 4, NoEndBlock = 8, NoStartBlock = 16 };
 
-    class FanucSocket
+    class FanucSocket : IDisposable
     {
         // CONSTANTS
         readonly int BufferSize;    // The size of the buffers
@@ -47,6 +48,17 @@ namespace JurmanMetrics
         public event ErrorEventHandler ExceptionOccurred;
         public event StateChangeEventHander StateChanged;
 
+        [Serializable]
+        public class FanucException : Exception
+        {
+            public FanucException() { }
+            public FanucException(string message) : base(message) { }
+            public FanucException(string message, Exception inner) : base(message, inner) { }
+            protected FanucException(
+              System.Runtime.Serialization.SerializationInfo info,
+              System.Runtime.Serialization.StreamingContext context)
+                : base(info, context) { }
+        }
         /// <summary>
         /// Constructor
         /// </summary>
@@ -58,6 +70,41 @@ namespace JurmanMetrics
             nsLock = new SemaphoreSlim(1, 1);
 
             ChangeState(FanucSocketState.NotConnected);
+        }
+
+        /// <summary>
+        /// Disposes of the FanucSocket
+        /// </summary>
+        public void Dispose()
+        {
+            StopOperation();
+
+            if (cancelSource != null)
+            {
+                cancelSource.Cancel();
+                cancelSource.Dispose();
+                cancelSource = null;
+            }
+
+            if (operation != null)
+            {
+                operation.Dispose();
+                operation = null;
+            }
+
+            nsLock.Dispose();
+
+            if (ns != null)
+            {
+                ns.Close();
+                ns.Dispose();
+            }
+
+            if (tc != null)
+            {
+                tc.Close();
+            }
+
         }
 
         /// <summary>
@@ -92,9 +139,11 @@ namespace JurmanMetrics
                 ChangeState(FanucSocketState.Idle);
             }
 
-            catch (SocketException se)
+            catch
             {
                 ChangeState(FanucSocketState.NotConnected);
+
+                throw;
             }
         }
 
@@ -111,9 +160,11 @@ namespace JurmanMetrics
                 ns.Dispose();
                 ns = null;
             }
+
             if (tc != null)
             {
                 tc.Close();
+                tc = null;
             }
 
             ChangeState(FanucSocketState.NotConnected);
@@ -162,7 +213,7 @@ namespace JurmanMetrics
             if (SafeToProceed())
             {
                 ns.Flush(); // Removes extra data that is stuck in the socket
-                
+
                 cancelSource = new CancellationTokenSource();
                 opCancelToken = cancelSource.Token;
 
@@ -177,7 +228,7 @@ namespace JurmanMetrics
                     );
 
                 // If data receiption completes fully, fire event and dispose
-                Task continuation = operation.ContinueWith(
+                operation.ContinueWith(
                 continuationOptions: TaskContinuationOptions.ExecuteSynchronously,
                 continuationAction: (t) =>
                     {
@@ -203,7 +254,7 @@ namespace JurmanMetrics
                 operation.Start();
             }
 
-            else throw new Exception("Operation in progress!");
+            else throw new FanucException("Operation already in progress!");
         }
 
         /// <summary>
@@ -229,7 +280,7 @@ namespace JurmanMetrics
                     );
 
                 // If sending completes fully, fire event and dispose
-                Task continuation = operation.ContinueWith(
+                operation.ContinueWith(
                 continuationOptions: TaskContinuationOptions.ExecuteSynchronously,
                 continuationAction: (t) =>
                 {
@@ -255,7 +306,7 @@ namespace JurmanMetrics
                 operation.Start();
             }
 
-            else throw new Exception("Operation in progress!");
+            else throw new FanucException("Operation in progress!");
         }
 
         /// <summary>
@@ -332,7 +383,7 @@ namespace JurmanMetrics
         /// </summary>
         /// <param name="chunk">The chunk to process</param>
         /// <param name="options">Processing options</param>
-        private void ReadIn_ParseData(ref FanucChunk chunk, FanucSocketOptions options)
+        static private void ReadIn_ParseData(ref FanucChunk chunk, FanucSocketOptions options)
         {
             if (!options.HasFlag(FanucSocketOptions.RawMode))
             {
@@ -357,7 +408,7 @@ namespace JurmanMetrics
         /// Converts LF to CR+LF
         /// </summary>
         /// <param name="chunk">The chunk to process</param>
-        private void ReadIn_ToCRLF(ref FanucChunk chunk)
+        static private void ReadIn_ToCRLF(ref FanucChunk chunk)
         {
             chunk.Data = Regex.Replace(chunk.Data, "(?<!\r)\n\n", "\r\n");
             chunk.Data = Regex.Replace(chunk.Data, "(?<!\r)\n", "\r\n");
@@ -367,7 +418,7 @@ namespace JurmanMetrics
         /// Crops the data in the DC2-DC4 bounds
         /// </summary>
         /// <param name="chunk">The chunk to process</param>
-        private void ReadIn_ClipBlock(ref FanucChunk chunk)
+        static private void ReadIn_ClipBlock(ref FanucChunk chunk)
         {
             Regex datacodes = new Regex(@"[\x12\x14]");
             MatchCollection matches = datacodes.Matches(chunk.Data);
@@ -414,7 +465,7 @@ namespace JurmanMetrics
                     }
                     else
                     {
-                        throw new Exception("ReadIn_ClipBlock: An unknown code was parsed. It was ASCII code "
+                        throw new FanucException("ReadIn_ClipBlock: An unknown code was parsed. It was ASCII code "
                             + Convert.ToString((int)chunk.Data[(m.Index)]) + ".");
                     }
                 }
@@ -515,7 +566,7 @@ namespace JurmanMetrics
         /// Santizes data before sending it out. Needs some work
         /// </summary>
         /// <param name="data">The data string</param>
-        private void WriteOut_Sanitize(ref string data, FanucSocketOptions options)
+        static private void WriteOut_Sanitize(ref string data, FanucSocketOptions options)
         {
             //Remove control codes left over in old files
             data = Regex.Replace(data, @"[\x11-\x14]", "");
@@ -532,7 +583,7 @@ namespace JurmanMetrics
                 }
                 else
                 {
-                    throw new Exception("No sub-programs found!");
+                    throw new FanucException("No sub-programs found!");
                 }
             }
             if (!options.HasFlag(FanucSocketOptions.NoEndBlock))
@@ -552,7 +603,7 @@ namespace JurmanMetrics
             }
         }
 
-        private void WriteOut_ToLF(ref string data)
+        static private void WriteOut_ToLF(ref string data)
         {
             data = Regex.Replace(data, "\r\n", "\n");
         }
