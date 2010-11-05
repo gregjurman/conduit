@@ -220,7 +220,6 @@ namespace Conduit
                 fSocket.Close();
             }
         }
-
         /// <summary>
         /// Sends the file defined in fileName to the NC
         /// </summary>
