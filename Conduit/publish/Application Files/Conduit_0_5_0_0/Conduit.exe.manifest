@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly manifestVersion="1.0" xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1">
+  <asmv1:assemblyIdentity version="0.5.0.0" name="Conduit.exe" publicKeyToken="a491fb7cfe13fdd3" language="neutral" processorArchitecture="x86" type="win32" />
+  <description asmv2:iconFile="Conduit.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="Conduit" version="0.5.0.0" language="neutral" processorArchitecture="x86" />
+    <commandLine file="Conduit.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet version="1" class="System.Security.NamedPermissionSet" Name="LocalIntranet" Description="Default rights given to applications on the local intranet" Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!-- UAC Manifest Options
+            If you want to change the Windows User Account Control level replace the 
+            requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+            Specifying requestedExecutionLevel node will disable file and registry virtualization.
+            If you want to utilize File and Registry Virtualization for backward 
+            compatibility then delete the requestedExecutionLevel node.
+        -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Conduit.exe" size="189440">
+      <assemblyIdentity name="Conduit" version="0.5.0.0" language="neutral" processorArchitecture="x86" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>IazYysl1gdBZGrOvTtrDsXLkM8E=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="Conduit.exe.config" size="144">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>cpzNzlRjZspwKGLNlX6RAlU3880=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Conduit.ico" size="53381">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>a3Kd8S7PoX2m0sQq27o1js37P/k=</dsig:DigestValue>
+    </hash>
+  </file>
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <!-- A list of all Windows versions that this application is designed to work with. Windows will automatically select the most compatible environment.-->
+      <!-- If your application is designed to work with Windows 7, uncomment the following supportedOS node-->
+      <!--<supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}"/>-->
+    </application>
+  </compatibility>
+<publisherIdentity name="CN=JURMANG\PCADMIN" issuerKeyHash="6aa1e4422f10f77c14032ad42085b5a34bac9044" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>uBH3sOdXyKq6BZdGnyPPdY2IgxI=</DigestValue></Reference></SignedInfo><SignatureValue>FVd2XtOYAKFMN9fo/1izToCTiHVd72lnu16unPDaspR2P2snN5d6DV6AcLDZ6JauMsH1pMQeNBMxXSineMD0zz8nmkI/foBVgz20g+WKRjrXYcOI/xeMpXahkaSXCRQxioH/nEL6Qd7MHB7XuZAcVSiZ3HvvMn94G4+Ng9nEW6E=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>0WoPfo2cIee2ZQajcde3ikDag8wwz91Ziyaebo3ipwH2om/8AHE55fV8+ppB2K/07ZMBc6Q97T88snfGKNoKOoeXPWPuLeiTbwuU8jAJxnM8UZkfBtgjs5Dcc8PCcjfg1qwMdohGsm6GgOODM1/ugm4zXU+hZNS0W2nPafxXUS8=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="1283888d75cf239f469705baaac857e7b0f711b8" Description="" Url=""><as:assemblyIdentity version="0.5.0.0" name="Conduit.exe" publicKeyToken="a491fb7cfe13fdd3" language="neutral" processorArchitecture="x86" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=JURMANG\PCADMIN</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>tcxI8Ejic4zTcFDo5+V1oNljPE8=</DigestValue></Reference></SignedInfo><SignatureValue>yQQUZNuHfDHnEw/5iqHqn2ajWf5xTf1qpEDMPLKCyjMnbAZ1x6j+q0sIPZHFK6MXZ+nWrmNQGbxmXnlvOnQAPYOGDe0C9inQteVu0m3bDHMgs4M57yH21nPveH8ZORbhlaqlvlFcqBcpJctHin/Yy437UVB+iV3C4yaeATTB1lc=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>0WoPfo2cIee2ZQajcde3ikDag8wwz91Ziyaebo3ipwH2om/8AHE55fV8+ppB2K/07ZMBc6Q97T88snfGKNoKOoeXPWPuLeiTbwuU8jAJxnM8UZkfBtgjs5Dcc8PCcjfg1qwMdohGsm6GgOODM1/ugm4zXU+hZNS0W2nPafxXUS8=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB1TCCAT6gAwIBAgIQSPI1cTZGiLZMAmHsSw8zLDANBgkqhkiG9w0BAQUFADApMScwJQYDVQQDHh4ASgBVAFIATQBBAE4ARwBcAFAAQwBBAEQATQBJAE4wHhcNMTAxMTA3MjEwODU1WhcNMTExMTA4MDMwODU1WjApMScwJQYDVQQDHh4ASgBVAFIATQBBAE4ARwBcAFAAQwBBAEQATQBJAE4wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBANFqD36NnCHntmUGo3HXt4pA2oPMMM/dWYsmnm6N4qcB9qJv/ABxOeX1fPqaQdiv9O2TAXOkPe0/PLJ3xijaCjqHlz1j7i3ok28LlPIwCcZzPFGZHwbYI7OQ3HPDwnI34NasDHaIRrJuhoDjgzNf7oJuM11PoWTUtFtpz2n8V1EvAgMBAAEwDQYJKoZIhvcNAQEFBQADgYEAwlL3sxJwda0doPKVgIGSB+bq4uQCtzajAbjdsM941WOaOOeEte/9darcpSZaElWLyUPD/ZOV+R+ZRSfjbzJ7h/7N5SbY78INo3fume/l1dMlMmrKU4D4QwtFpSxitMtuXpWm/2RMpJkzCwNR/jEQ8MxwOHIxFn/b/KlvcK2BVKw=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
