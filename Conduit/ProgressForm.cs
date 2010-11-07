@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.IO;
 using JurmanMetrics;
@@ -139,33 +140,47 @@ namespace Conduit
         {
             string[] args = Environment.GetCommandLineArgs();
 
+            Regex argvarregex = new Regex(@"(?<=--)[\w]+(?==)");
+
             progressBar.Hide();
             labelStatus.Hide();
             host = "";
             fileName = "";
 
-            if (args.Length == 2)
-            {
-                host = args[1];
-                textController.Text = host;
-            }
-            if (args.Length == 3)
-            {
-                host = args[1];
-                fileName = args[2];
-                try
-                {
-                    FileInfo fi = new FileInfo(fileName);
+            args[0] = null;
 
-                    if (!fi.Exists)
-                        throw new FileNotFoundException("File not found", fileName);
-                    
-                    this.Text = "Conduit - " + fi.Name;
-                }
-                catch
+            foreach (string arg in args)
+            {
+                if (!String.IsNullOrEmpty(arg))
                 {
-                    throw;
+                    Match m = argvarregex.Match(arg);
+                    if (m.Success)
+                    {
+                        if (m.Value.ToLower() == "host")
+                        {
+                            host = arg.Substring(7);
+                        }
+                    }
+                    else //Probably a file
+                    {
+                        try
+                        {
+                            fileName = arg;
+
+                            FileInfo fi = new FileInfo(fileName);
+
+                            if (!fi.Exists)
+                                throw new FileNotFoundException("File not found", fileName);
+
+                            this.Text = "Conduit - " + fi.Name;
+                        }
+                        catch
+                        {
+                            throw;
+                        }
+                    }
                 }
+
             }
 
             if (String.IsNullOrEmpty(host))
@@ -173,6 +188,12 @@ namespace Conduit
                 textController.Text = "";
                 buttonReceive.Enabled = false;
                 buttonSend.Enabled = false;
+            }
+            else
+            {
+                textController.Text = host;
+                buttonReceive.Enabled = true;
+                buttonSend.Enabled = true;
             }
         }
 
