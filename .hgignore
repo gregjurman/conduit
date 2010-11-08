@@ -2,3 +2,4 @@ relre:.suo
 relre:/bin/*
 relre:/obj/*
 relre:.user
+glob:JMISetup/Debug/*

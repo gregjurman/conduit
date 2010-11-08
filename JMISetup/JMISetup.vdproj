@@ -89,10 +89,10 @@
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0"
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
                     {
-                    "Name" = "8:Microsoft .NET Framework 4 (x86 and x64)"
-                    "ProductCode" = "8:.NETFramework,Version=v4.0"
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
                     }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
                     {
@@ -122,7 +122,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v4.0"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.0,Profile=Client"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=131000"
                 }
@@ -198,7 +198,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Conduit for FANUC"
         "ProductCode" = "8:{E5FFA9F6-E0E5-4662-8DC5-D332A46ECFA8}"
-        "PackageCode" = "8:{9771DFB2-1ED1-46FF-ACF5-4BDC2CE90053}"
+        "PackageCode" = "8:{EB645999-B8FD-4EBD-8F4E-B2E6411608E4}"
         "UpgradeCode" = "8:{B95A35B2-2B12-40AC-A8C6-3ECC78CC8D2D}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -887,7 +887,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B28B79DA087246198764B3F5BCED9120"
             {
-            "SourcePath" = "8:..\\Conduit\\obj\\x86\\Release\\Conduit.exe"
+            "SourcePath" = "8:..\\Conduit\\obj\\Release\\Conduit.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F7ECB66AB4AE4B58A0A448EBAAEAB17A"

@@ -97,10 +97,7 @@ namespace Conduit
 
         void fSocket_SendOperationCompleted(object sender, EventArgs e)
         {
-            progressBar.Hide();
-            labelStatus.Hide();
-
-            MessageBox.Show("Send complete!");
+            SendComplete();
         }
 
         void SendComplete()
@@ -113,6 +110,7 @@ namespace Conduit
             {
                 progressBar.Hide();
                 labelStatus.Hide();
+                fSocket.Close();
 
                 MessageBox.Show("Send complete!");
             }
@@ -214,6 +212,10 @@ namespace Conduit
                 ofd.FileOk += new CancelEventHandler(ofdSend_FileOk);
                 ofd.ShowDialog();
             }
+            else
+            {
+                SendData();
+            }
         }
 
         /// <summary>
@@ -235,10 +237,6 @@ namespace Conduit
             catch
             {
                 throw;
-            }
-            finally
-            {
-                fSocket.Close();
             }
         }
         /// <summary>

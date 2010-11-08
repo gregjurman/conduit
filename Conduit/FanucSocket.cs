@@ -82,7 +82,8 @@ namespace JurmanMetrics
             if (cancelSource != null)
             {
                 cancelSource.Cancel();
-                cancelSource.Dispose();
+                Thread.Sleep(1000);
+                //cancelSource.Dispose();
                 cancelSource = null;
             }
 
@@ -232,7 +233,7 @@ namespace JurmanMetrics
                 continuationOptions: TaskContinuationOptions.ExecuteSynchronously,
                 continuationAction: (t) =>
                     {
-                        if (t.IsCompleted)
+                        if (t.IsCompleted && !t.IsCanceled)
                         {
                             if (ReceiveOperationCompleted != null) ReceiveOperationCompleted.Invoke(this, null);
                         }
@@ -284,7 +285,7 @@ namespace JurmanMetrics
                 continuationOptions: TaskContinuationOptions.ExecuteSynchronously,
                 continuationAction: (t) =>
                 {
-                    if (t.IsCompleted)
+                    if (t.IsCompleted && !t.IsCanceled)
                     {
                         if (SendOperationCompleted != null) SendOperationCompleted.Invoke(this, null);
                     }
