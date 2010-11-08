@@ -43,6 +43,27 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -59,6 +80,27 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -80,7 +122,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.0"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=131000"
                 }
@@ -154,27 +196,27 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:JMISetup"
-        "ProductCode" = "8:{041CA018-C709-4013-BCBE-CD26D8477FD2}"
-        "PackageCode" = "8:{6486334D-9396-4405-91A8-2C515F6F554C}"
+        "ProductName" = "8:Conduit for FANUC"
+        "ProductCode" = "8:{E5FFA9F6-E0E5-4662-8DC5-D332A46ECFA8}"
+        "PackageCode" = "8:{9771DFB2-1ED1-46FF-ACF5-4BDC2CE90053}"
         "UpgradeCode" = "8:{B95A35B2-2B12-40AC-A8C6-3ECC78CC8D2D}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "InstallAllUsers" = "11:TRUE"
+        "ProductVersion" = "8:0.5"
+        "Manufacturer" = "8:Jurman Metrics"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:JMISetup"
+        "Title" = "8:Conduit for FANUC"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:Jurman Metrics"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:"
-        "ARPIconIndex" = "3:0"
+        "ARPPRODUCTICON" = "8:_B28B79DA087246198764B3F5BCED9120"
+        "ARPIconIndex" = "3:32512"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
         "TargetPlatform" = "3:0"
@@ -276,18 +318,102 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_2C992E4947274F9F966F5E974157AEF3"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_01E160BC62174F93B4C7F9B0099A546E"
             {
-            "Name" = "8:Conduit - M1"
-            "Arguments" = "8:"
+            "Name" = "8:Conduit - T2"
+            "Arguments" = "8:--host=t2devsrv.devsrv.jurmanmetrics.local"
             "Description" = "8:"
             "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
+            "IconIndex" = "3:32512"
             "Transitive" = "11:FALSE"
             "Target" = "8:_B28B79DA087246198764B3F5BCED9120"
             "Folder" = "8:_E965E94417D94792B7D07B47329D4F1F"
             "WorkingFolder" = "8:_F7ECB66AB4AE4B58A0A448EBAAEAB17A"
-            "Icon" = "8:"
+            "Icon" = "8:_B28B79DA087246198764B3F5BCED9120"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_051BCB21601044308AD048F9CE06B9D4"
+            {
+            "Name" = "8:Conduit - T1"
+            "Arguments" = "8:--host=t1devsrv.devsrv.jurmanmetrics.local"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:32512"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_B28B79DA087246198764B3F5BCED9120"
+            "Folder" = "8:_E965E94417D94792B7D07B47329D4F1F"
+            "WorkingFolder" = "8:_F7ECB66AB4AE4B58A0A448EBAAEAB17A"
+            "Icon" = "8:_B28B79DA087246198764B3F5BCED9120"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_204D78096DE34CFCB8C06F8B648CF209"
+            {
+            "Name" = "8:Conduit - T3"
+            "Arguments" = "8:--host=t3devsrv.devsrv.jurmanmetrics.local"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:32512"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_B28B79DA087246198764B3F5BCED9120"
+            "Folder" = "8:_E965E94417D94792B7D07B47329D4F1F"
+            "WorkingFolder" = "8:_F7ECB66AB4AE4B58A0A448EBAAEAB17A"
+            "Icon" = "8:_B28B79DA087246198764B3F5BCED9120"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_2726ADBC8A7A460DA6C98C352792A97E"
+            {
+            "Name" = "8:Conduit - M4"
+            "Arguments" = "8:--host=m4devsrv.devsrv.jurmanmetrics.local"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:32512"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_B28B79DA087246198764B3F5BCED9120"
+            "Folder" = "8:_E965E94417D94792B7D07B47329D4F1F"
+            "WorkingFolder" = "8:_F7ECB66AB4AE4B58A0A448EBAAEAB17A"
+            "Icon" = "8:_B28B79DA087246198764B3F5BCED9120"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_29888DB3697D4FFCAAA6931B3D74F477"
+            {
+            "Name" = "8:Conduit - M3"
+            "Arguments" = "8:--host=m3devsrv.devsrv.jurmanmetrics.local"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:32512"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_B28B79DA087246198764B3F5BCED9120"
+            "Folder" = "8:_E965E94417D94792B7D07B47329D4F1F"
+            "WorkingFolder" = "8:_F7ECB66AB4AE4B58A0A448EBAAEAB17A"
+            "Icon" = "8:_B28B79DA087246198764B3F5BCED9120"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_2C992E4947274F9F966F5E974157AEF3"
+            {
+            "Name" = "8:Conduit - M1"
+            "Arguments" = "8:--host=m1devsrv.devsrv.jurmanmetrics.local"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:32512"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_B28B79DA087246198764B3F5BCED9120"
+            "Folder" = "8:_E965E94417D94792B7D07B47329D4F1F"
+            "WorkingFolder" = "8:_F7ECB66AB4AE4B58A0A448EBAAEAB17A"
+            "Icon" = "8:_B28B79DA087246198764B3F5BCED9120"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_CD703E9D4F634E20A94EEABE9AA202B3"
+            {
+            "Name" = "8:Conduit - M6"
+            "Arguments" = "8:--host=m6devsrv.devsrv.jurmanmetrics.local"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:32512"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_B28B79DA087246198764B3F5BCED9120"
+            "Folder" = "8:_E965E94417D94792B7D07B47329D4F1F"
+            "WorkingFolder" = "8:_F7ECB66AB4AE4B58A0A448EBAAEAB17A"
+            "Icon" = "8:_B28B79DA087246198764B3F5BCED9120"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_DC080193F42D4E1A9CE1024D6D7245AD"
@@ -296,26 +422,40 @@
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
+            "IconIndex" = "3:32512"
             "Transitive" = "11:FALSE"
             "Target" = "8:_B28B79DA087246198764B3F5BCED9120"
             "Folder" = "8:_E965E94417D94792B7D07B47329D4F1F"
             "WorkingFolder" = "8:_F7ECB66AB4AE4B58A0A448EBAAEAB17A"
-            "Icon" = "8:"
+            "Icon" = "8:_B28B79DA087246198764B3F5BCED9120"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_EAD421BF7A7A4D9C806C2F8E5F7ED850"
+            {
+            "Name" = "8:Conduit - M5"
+            "Arguments" = "8:--host=m5devsrv.devsrv.jurmanmetrics.local"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:32512"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_B28B79DA087246198764B3F5BCED9120"
+            "Folder" = "8:_E965E94417D94792B7D07B47329D4F1F"
+            "WorkingFolder" = "8:_F7ECB66AB4AE4B58A0A448EBAAEAB17A"
+            "Icon" = "8:_B28B79DA087246198764B3F5BCED9120"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_FEDC6AD1BFBA4C598D43A00ACF6A126B"
             {
             "Name" = "8:Conduit - M2"
-            "Arguments" = "8:"
+            "Arguments" = "8:--host=m2devsrv.devsrv.jurmanmetrics.local"
             "Description" = "8:"
             "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
+            "IconIndex" = "3:32512"
             "Transitive" = "11:FALSE"
             "Target" = "8:_B28B79DA087246198764B3F5BCED9120"
             "Folder" = "8:_E965E94417D94792B7D07B47329D4F1F"
             "WorkingFolder" = "8:_F7ECB66AB4AE4B58A0A448EBAAEAB17A"
-            "Icon" = "8:"
+            "Icon" = "8:_B28B79DA087246198764B3F5BCED9120"
             "Feature" = "8:"
             }
         }
@@ -747,7 +887,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B28B79DA087246198764B3F5BCED9120"
             {
-            "SourcePath" = "8:..\\Conduit\\obj\\x86\\Debug\\Conduit.exe"
+            "SourcePath" = "8:..\\Conduit\\obj\\x86\\Release\\Conduit.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F7ECB66AB4AE4B58A0A448EBAAEAB17A"
