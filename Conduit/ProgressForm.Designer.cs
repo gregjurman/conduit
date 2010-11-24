@@ -39,24 +39,25 @@
             this.buttonReceive = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.labelStatus = new System.Windows.Forms.Label();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 15);
+            this.label1.Location = new System.Drawing.Point(12, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 13);
+            this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Controller:";
+            this.label1.Text = "Target:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // textController
             // 
-            this.textController.Location = new System.Drawing.Point(74, 12);
+            this.textController.Location = new System.Drawing.Point(59, 12);
             this.textController.MinimumSize = new System.Drawing.Size(4, 23);
             this.textController.Name = "textController";
-            this.textController.Size = new System.Drawing.Size(334, 20);
+            this.textController.Size = new System.Drawing.Size(359, 23);
             this.textController.TabIndex = 4;
             this.textController.Text = "m1devsrv.devsrv.jurmanmetrics.local";
             this.textController.TextChanged += new System.EventHandler(this.textController_TextChanged);
@@ -64,7 +65,7 @@
             // buttonSend
             // 
             this.buttonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSend.Location = new System.Drawing.Point(252, 57);
+            this.buttonSend.Location = new System.Drawing.Point(262, 67);
             this.buttonSend.Name = "buttonSend";
             this.buttonSend.Size = new System.Drawing.Size(75, 23);
             this.buttonSend.TabIndex = 6;
@@ -75,7 +76,7 @@
             // buttonReceive
             // 
             this.buttonReceive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonReceive.Location = new System.Drawing.Point(333, 57);
+            this.buttonReceive.Location = new System.Drawing.Point(343, 67);
             this.buttonReceive.Name = "buttonReceive";
             this.buttonReceive.Size = new System.Drawing.Size(75, 23);
             this.buttonReceive.TabIndex = 7;
@@ -86,7 +87,7 @@
             // progressBar
             // 
             this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.progressBar.Location = new System.Drawing.Point(12, 57);
+            this.progressBar.Location = new System.Drawing.Point(12, 67);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(234, 23);
             this.progressBar.TabIndex = 8;
@@ -95,25 +96,43 @@
             // 
             this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelStatus.AutoSize = true;
-            this.labelStatus.Location = new System.Drawing.Point(10, 41);
+            this.labelStatus.Location = new System.Drawing.Point(10, 51);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(61, 13);
             this.labelStatus.TabIndex = 9;
             this.labelStatus.Text = "Waiting......";
             // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.Location = new System.Drawing.Point(262, 67);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(156, 23);
+            this.buttonCancel.TabIndex = 10;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Visible = false;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            // 
             // ProgressForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(420, 92);
+            this.ClientSize = new System.Drawing.Size(430, 102);
+            this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.buttonReceive);
             this.Controls.Add(this.buttonSend);
             this.Controls.Add(this.textController);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(436, 130);
+            this.MinimumSize = new System.Drawing.Size(436, 130);
             this.Name = "ProgressForm";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Conduit";
             this.Load += new System.EventHandler(this.ProgressForm_Load);
             this.ResumeLayout(false);
@@ -129,5 +148,6 @@
         private System.Windows.Forms.Button buttonReceive;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.Button buttonCancel;
     }
 }

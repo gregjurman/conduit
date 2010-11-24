@@ -25,7 +25,7 @@ namespace Conduit
         {
             InitializeComponent();
 
-            fSocket = new FanucSocket(100, 200);
+            fSocket = new FanucSocket(10, 4800);
 
             fSocket.StateChanged += new FanucSocket.StateChangeEventHander(fSocket_StateChanged);
             fSocket.SendOperationCompleted += new EventHandler(fSocket_SendOperationCompleted);
@@ -88,6 +88,9 @@ namespace Conduit
 
                 recvDataStream.Flush();
                 recvDataStream.Close();
+                buttonReceive.Show();
+                buttonSend.Show();
+                buttonCancel.Hide();
 
                 fSocket.Close();
 
@@ -110,6 +113,10 @@ namespace Conduit
             {
                 progressBar.Hide();
                 labelStatus.Hide();
+                buttonReceive.Show();
+                buttonSend.Show();
+                buttonCancel.Hide();
+
                 fSocket.Close();
 
                 MessageBox.Show("Send complete!");
@@ -142,6 +149,9 @@ namespace Conduit
 
             progressBar.Hide();
             labelStatus.Hide();
+            buttonReceive.Show();
+            buttonSend.Show();
+            buttonCancel.Hide();
             host = "";
             fileName = "";
 
@@ -208,13 +218,14 @@ namespace Conduit
                 if (ofd == null) ofd = new OpenFileDialog();
                 ofd.CheckFileExists = true;
                 ofd.Multiselect = false;
+                ofd.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
                 ofd.DefaultExt = "txt";
                 ofd.FileOk += new CancelEventHandler(ofdSend_FileOk);
                 ofd.ShowDialog();
             }
             else
             {
-                SendData();
+                this.BeginInvoke(new MethodInvoker(SendData));
             }
         }
 
@@ -232,7 +243,7 @@ namespace Conduit
 
             try
             {
-                SendData();
+                this.BeginInvoke(new MethodInvoker(SendData));
             }
             catch
             {
@@ -242,32 +253,44 @@ namespace Conduit
         /// <summary>
         /// Sends the file defined in fileName to the NC
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         void SendData()
         {
             StreamReader sr = new StreamReader(fileName);
             string dataIn = sr.ReadToEnd();
 
+            sr.Dispose();
+            sr = null;
+
             try
             {
+                fSocket.Connect(textController.Text, 10001); //This is hard set, Fix it. CONDUIT-7
+
+                progressBar.Value = 0;
                 progressBar.Show();
                 labelStatus.Show();
+                buttonReceive.Hide();
+                buttonSend.Hide();
+                buttonCancel.Show();
 
-                fSocket.Connect(textController.Text, 10001); //This is hard set, fix it (CONDUIT-7)
                 fSocket.WriteOut(dataIn, FanucSocketOptions.FixNewline);
+            }
+            catch (FanucSocket.FanucAlreadyConnectedException face)
+            {
+                MessageBox.Show(face.Message);
+            }
+            catch (System.Net.Sockets.SocketException sexp)
+            {
+                MessageBox.Show(
+@"There was a problem trying to connect to the target. Please check that the target,
+    1) is spelled correctly in the 'target' text box,
+    1) is turned-on and connected to the network,
+    2) has all status lights lit green.
+
+More Info: " + sexp.Message, "Conduit");
             }
             catch
             {
-                sr.Dispose();
-                sr = null;
-
                 throw;
-            }
-
-            if (sr != null)
-            {
-                sr.Dispose();
-                sr = null;
             }
         }
 
@@ -278,10 +301,30 @@ namespace Conduit
         {
             try
             {
+                fSocket.Connect(textController.Text, 10001); //This is hard set, Fix it. CONDUIT-7
+
+                progressBar.Value = 50;
                 progressBar.Show();
                 labelStatus.Show();
-                fSocket.Connect(textController.Text, 10001); //This is hard set, fix it
+                buttonReceive.Hide();
+                buttonSend.Hide();
+                buttonCancel.Show();
+                
                 fSocket.ReadIn(FanucSocketOptions.FixNewline);
+            }
+            catch (FanucSocket.FanucAlreadyConnectedException)
+            {
+                MessageBox.Show("Operation is already in progress.");
+            }
+            catch (System.Net.Sockets.SocketException sexp)
+            {
+                MessageBox.Show(
+@"There was a problem trying to connect to the target. Please check that the target,
+    1) is spelled correctly in the 'target' text box,
+    1) is turned-on and connected to the network,
+    2) has all status lights lit green.
+
+More Info: "+sexp.Message, "Conduit");
             }
             catch
             {
@@ -295,6 +338,7 @@ namespace Conduit
             {
                 if (sfd == null) sfd = new SaveFileDialog();
                 sfd.CheckFileExists = false;
+                sfd.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
                 sfd.DefaultExt = "txt";
                 sfd.FileOk += new CancelEventHandler(sfd_FileOk);
                 sfd.ShowDialog();
@@ -304,7 +348,7 @@ namespace Conduit
                 try
                 {
                     recvDataStream = new StreamWriter(fileName, false, Encoding.ASCII, 1024);
-                    ReceiveData();
+                    this.BeginInvoke(new MethodInvoker(ReceiveData));
                 }
                 catch
                 {
@@ -323,7 +367,7 @@ namespace Conduit
             try
             {
                 recvDataStream = new StreamWriter(fileName, false, Encoding.ASCII, 1024);
-                ReceiveData();
+                this.BeginInvoke(new MethodInvoker(ReceiveData));
             }
             catch
             {
@@ -342,6 +386,15 @@ namespace Conduit
             {
                 buttonReceive.Enabled = true;
                 buttonSend.Enabled = true;
+            }
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            if (fSocket.Status != FanucSocketState.Idle)
+            {
+                buttonCancel.Enabled = false;
+                fSocket.StopOperation();
             }
         }
     }

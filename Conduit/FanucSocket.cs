@@ -59,13 +59,25 @@ namespace JurmanMetrics
               System.Runtime.Serialization.StreamingContext context)
                 : base(info, context) { }
         }
+        [Serializable]
+        public class FanucAlreadyConnectedException : FanucException
+        {
+            public FanucAlreadyConnectedException() { }
+            public FanucAlreadyConnectedException(string message) : base(message) { }
+            public FanucAlreadyConnectedException(string message, Exception inner) : base(message, inner) { }
+            protected FanucAlreadyConnectedException(
+              System.Runtime.Serialization.SerializationInfo info,
+              System.Runtime.Serialization.StreamingContext context)
+                : base(info, context) { }
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
-        public FanucSocket(int bufferSize, int sendDelay)
+        public FanucSocket(int bufferSize, int baudRate)
         {
             BufferSize = bufferSize;
-            SendDelay = sendDelay;
+            SendDelay = (int)((1.0/baudRate)*12000*bufferSize);
 
             nsLock = new SemaphoreSlim(1, 1);
 
@@ -128,23 +140,33 @@ namespace JurmanMetrics
         /// <param name="port">The port number to connect to.</param>
         public void Connect(string hostName, int port)
         {
-            try
+            if (tc == null) tc = new TcpClient();
+
+            if (!tc.Connected)
             {
-                if (tc == null) tc = new TcpClient();
-                tc.Connect(hostName, port);
+                try
+                {
+                    tc.Connect(hostName, port);
 
-                ns = tc.GetStream();
+                    if (ns != null) ns.Close();
 
-                ns.ReadTimeout = 5000;
-                ns.WriteTimeout = 5000;
-                ChangeState(FanucSocketState.Idle);
+                    ns = tc.GetStream();
+
+                    ns.ReadTimeout = 5000;
+                    ns.WriteTimeout = 5000;
+                    ChangeState(FanucSocketState.Idle);
+                }
+
+                catch
+                {
+                    ChangeState(FanucSocketState.NotConnected);
+
+                    throw;
+                }
             }
-
-            catch
+            else
             {
-                ChangeState(FanucSocketState.NotConnected);
-
-                throw;
+                throw new FanucAlreadyConnectedException("Socket is already connected");
             }
         }
 
@@ -513,7 +535,7 @@ namespace JurmanMetrics
                     if (ChunkSent != null) ChunkSent.Invoke(this, Math.Round((cId / (double)chunks.Length) * 100, 1));
                 }
 
-                opCancelToken.ThrowIfCancellationRequested();
+                //opCancelToken.ThrowIfCancellationRequested();
 
                 Thread.Sleep(SendDelay);
 
