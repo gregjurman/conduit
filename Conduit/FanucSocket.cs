@@ -542,6 +542,24 @@ namespace JurmanMetrics
                 opCancelToken.ThrowIfCancellationRequested();
             }
 
+            bool isWaiting = true;
+            int tempTimer = 0;
+
+            while (isWaiting)
+            {
+                lastCode = WriteOut_GetCode();
+
+                if ((lastCode == 0x13) || tempTimer >= 30)
+                {
+                    isWaiting = false;
+                }
+
+                tempTimer++;
+                Thread.Sleep(1000);
+
+                opCancelToken.ThrowIfCancellationRequested();
+            }
+
             opCancelToken.ThrowIfCancellationRequested();
         }
 

@@ -136,21 +136,10 @@
         }
         "Folder"
         {
-            "{1525181F-901A-416C-8A58-119130FE478E}:_6F6102A371434FF688F4FDF24D7BC3FF"
-            {
-            "Name" = "8:#1916"
-            "AlwaysCreate" = "11:FALSE"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Property" = "8:DesktopFolder"
-                "Folders"
-                {
-                }
-            }
             "{1525181F-901A-416C-8A58-119130FE478E}:_7C304FD4625043A4BBAD8C17EF1B8C23"
             {
             "Name" = "8:#1919"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:ProgramMenuFolder"
@@ -159,7 +148,7 @@
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_E965E94417D94792B7D07B47329D4F1F"
                     {
                     "Name" = "8:Conduit"
-                    "AlwaysCreate" = "11:FALSE"
+                    "AlwaysCreate" = "11:TRUE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
                     "Property" = "8:_C632B95A1569481291D696A9199C9A00"
@@ -197,15 +186,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Conduit for FANUC"
-        "ProductCode" = "8:{01CADAC6-266B-4222-B944-37C05C14FB4F}"
-        "PackageCode" = "8:{5B274934-90B3-481C-BD1A-0571A3ECC12D}"
+        "ProductCode" = "8:{117D7108-3C13-42D5-9CB9-3906CC8C2A49}"
+        "PackageCode" = "8:{4C0D189B-CDCE-4724-86C9-DF3FA34680F3}"
         "UpgradeCode" = "8:{B95A35B2-2B12-40AC-A8C6-3ECC78CC8D2D}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:TRUE"
+        "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:0.5.2"
+        "ProductVersion" = "8:0.6.1"
         "Manufacturer" = "8:Jurman Metrics"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
