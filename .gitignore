@@ -2,5 +2,5 @@
 */Release/*
 *.suo
 *.user
-.hgignore
+*.hgignore
 .hg/*
