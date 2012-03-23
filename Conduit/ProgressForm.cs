@@ -95,6 +95,9 @@ namespace Conduit
                 fSocket.Close();
 
                 MessageBox.Show("Receive complete!");
+                
+                // Close Application when done
+                Application.Exit();
             }
         }
 
@@ -120,6 +123,9 @@ namespace Conduit
                 fSocket.Close();
 
                 MessageBox.Show("Send complete!");
+                
+                // Quit application when done
+                Application.Exit();
             }
         }
 
